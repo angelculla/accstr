@@ -30,15 +30,15 @@ The property "text" is the char pointer to the string
 
 class accstr {
   private:
+    char *txt;
     uint16_t tmaxsize;
     uint16_t tsize;
     bool useheap;
   public:
-    char *txt;
-
     accstr(uint16_t sz);                         // uses heap to store the string
     accstr(char *p, uint16_t sz);                // uses external char* array (avoids dynamic memory)
     ~accstr();
+    char* text();                                // returns pointer to the string
     uint16_t maxsize();                          // returns the max size of the string
     uint16_t size();                             // returns the actual size of the string
     bool cpy(char *src);                         // copies one string 

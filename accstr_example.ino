@@ -13,38 +13,38 @@ void foo() {
 
   Serial.print(F("global_txt+=\"12\" > "));
   if (global_txt+="12") {
-    Serial.print(global_txt.txt);
+    Serial.print(global_txt.text());
     Serial.println(F(" - OK"));
   }
   else {
-    Serial.print(global_txt.txt);
+    Serial.print(global_txt.text());
     Serial.println(F(" - Overflow!!!"));
   }
 
   Serial.print(F("local_txt=\"0123456789\" > "));
   if (local_txt="0123456789") {
-    Serial.print(local_txt.txt);
+    Serial.print(local_txt.text());
     Serial.println(F(" - OK"));
   }
   else {
-    Serial.print(local_txt.txt);
+    Serial.print(local_txt.text());
     Serial.println(F(" - Overflow!!!"));
   }
 
   Serial.print(F("local_dm_txt=\"Hello world\" > "));
   if (local_dm_txt="Hello world") {
-    Serial.print(local_dm_txt.txt);
+    Serial.print(local_dm_txt.text());
     Serial.println(F(" - OK"));
   }
   else {
-    Serial.print(local_dm_txt.txt);
+    Serial.print(local_dm_txt.text());
     Serial.println(F(" - Overflow!!!"));
   }
 
   if (local_dm_txt=="Hello world") Serial.println(F("local_dm_txt is equal to \"Hello world\""));
   else Serial.println(F("local_dm_txt is different to \"Hello world\""));
 
-  Serial.print("Free heap size: ");
+  Serial.print(F("Free heap size: "));
   Serial.println(ESP.getFreeHeap());
   Serial.println();
 }

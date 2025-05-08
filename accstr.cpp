@@ -28,6 +28,12 @@ accstr::~accstr() {
 
 
 
+char* accstr::text() {
+  return txt;
+}
+
+
+
 uint16_t accstr::maxsize() {
   return tmaxsize;
 }
@@ -167,6 +173,5 @@ bool accstr::operator==(const __FlashStringHelper *src) {
   if (strcmp(txt,(const char*)src)==0) return true;
   else return false;
 }
-
 
 
