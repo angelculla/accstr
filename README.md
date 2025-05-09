@@ -19,3 +19,6 @@ Despite using STRINGZ the actual size is managed by an internal variable
 instead the ending zero. This allow to have zeros inside the string and so
 you can use this class to store non text data buffers. In any case the
 ending zero is allways there.
+
+The operators =, += and == are overloaded to easily assign, add and compare.
+See more info in the comments in accstr.h
