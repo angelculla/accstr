@@ -41,17 +41,21 @@ class accstr {
     char* text();                                // returns pointer to the string
     uint16_t maxsize();                          // returns the max size of the string
     uint16_t size();                             // returns the actual size of the string
+    void setsize(uint16_t sz);                   // adjusts the size
     void setpbuf(char *p, uint16_t sz);          // sets an external array as buffer. Releases heap if used
     bool cpy(char *src);                         // copies one string 
     bool cpy(const __FlashStringHelper *src);    // copies from PROGMEM
     bool cat(char *src);                         // adds a string
     bool cat(const __FlashStringHelper *src);    // adds from PROGMEM
     bool catc(char c);                           // adds a single char
-    bool addint(int32_t val);                    // adds an int value
-    bool addintfmt(char *fmt, int32_t val);      // adds an int value formated in printf style
+    bool cpyint(int32_t val);                    // copies an int value
+    bool catint(int32_t val);                    // adds an int value
+    bool cpyintfmt(char *fmt, int32_t val);      // copies an int value formated in printf style
+    bool catintfmt(char *fmt, int32_t val);      // adds an int value formated in printf style
     void clear();                                // clears the string (no heap is released if used)
     bool operator=(char *src);
     bool operator=(const __FlashStringHelper *src);
+    bool operator=(int32_t val);
     bool operator+=(char *src);
     bool operator+=(const __FlashStringHelper *src);
     bool operator+=(int32_t val);

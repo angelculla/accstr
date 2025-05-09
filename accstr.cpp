@@ -46,6 +46,14 @@ uint16_t accstr::size() {
 
 
 
+void accstr::setsize(uint16_t sz) {
+  if (sz>tmaxsize) sz=tmaxsize;
+  tsize=sz;
+  pbuf[tsize]=0;
+}
+
+
+
 void accstr::setpbuf(char *p, uint16_t sz) {
   if (useheap) {
     free(pbuf);
@@ -78,25 +86,6 @@ bool accstr::cpy(char *src) {
 
 
 
-bool accstr::cat(char *src) {
-  uint16_t i,sz;
-  bool res;
-
-  sz=strlen(src);
-  if ((tsize+sz)>tmaxsize) {
-    sz=tmaxsize-tsize;
-    res=false;
-  }
-  else {
-    res=true;
-  }
-  for (i=0;i<sz;i++) pbuf[tsize++]=src[i];
-  pbuf[tsize]=0;
-  return res;  
-}
-
-
-
 bool accstr::cpy(const __FlashStringHelper *src) {
   uint16_t i;
   bool res;
@@ -110,6 +99,25 @@ bool accstr::cpy(const __FlashStringHelper *src) {
     res=true;
   }
   for (i=0;i<tsize;i++) pbuf[i]=pgm_read_byte_near((const char*)src+i);
+  pbuf[tsize]=0;
+  return res;  
+}
+
+
+
+bool accstr::cat(char *src) {
+  uint16_t i,sz;
+  bool res;
+
+  sz=strlen(src);
+  if ((tsize+sz)>tmaxsize) {
+    sz=tmaxsize-tsize;
+    res=false;
+  }
+  else {
+    res=true;
+  }
+  for (i=0;i<sz;i++) pbuf[tsize++]=src[i];
   pbuf[tsize]=0;
   return res;  
 }
@@ -144,22 +152,44 @@ bool accstr::catc(char c) {
 
 
 
-bool accstr::addint(int32_t val) {
-  char src[51];
+bool accstr::cpyint(int32_t val) {
+  char src[31];
   int i;
 
-  i=snprintf(src,50,"%d",val);
+  i=snprintf(src,30,"%d",val);
+  if (i<0) return false;
+  return cpy(src);
+}
+
+
+
+bool accstr::catint(int32_t val) {
+  char src[31];
+  int i;
+
+  i=snprintf(src,30,"%d",val);
   if (i<0) return false;
   return cat(src);
 }
 
 
 
-bool accstr::addintfmt(char *fmt, int32_t val) {
-  char src[51];
+bool accstr::cpyintfmt(char *fmt, int32_t val) {
+  char src[101];
   int i;
 
-  i=snprintf(src,50,fmt,val);
+  i=snprintf(src,100,fmt,val);
+  if (i<0) return false;
+  return cpy(src);
+}
+
+
+
+bool accstr::catintfmt(char *fmt, int32_t val) {
+  char src[101];
+  int i;
+
+  i=snprintf(src,100,fmt,val);
   if (i<0) return false;
   return cat(src);
 }
@@ -185,20 +215,26 @@ bool accstr::operator=(const __FlashStringHelper *src) {
 
 
 
+bool accstr::operator=(int32_t val) {
+  return cpyint(val);
+}
+
+
+
 bool accstr::operator+=(char *src) {
   return cat(src);
 }
 
 
 
-bool accstr::operator+=(int32_t val) {
-  return addint(val);
+bool accstr::operator+=(const __FlashStringHelper *src) {
+  return cat(src);
 }
 
 
 
-bool accstr::operator+=(const __FlashStringHelper *src) {
-  return cat(src);
+bool accstr::operator+=(int32_t val) {
+  return catint(val);
 }
 
 
