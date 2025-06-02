@@ -50,8 +50,8 @@ class accstr {
     bool catc(char c);                           // adds a single char
     bool cpyint(int32_t val);                    // copies an int value
     bool catint(int32_t val);                    // adds an int value
-    bool cpyintfmt(char *fmt, int32_t val);      // copies an int value formated in printf style
-    bool catintfmt(char *fmt, int32_t val);      // adds an int value formated in printf style
+    bool cpyfmt(char *fmt, ...);                 // copies formated like printf style
+    bool catfmt(char *fmt, ...);                 // adds formated like printf style
     void clear();                                // clears the string (no heap is released if used)
     bool operator=(char *src);
     bool operator=(const __FlashStringHelper *src);

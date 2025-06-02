@@ -2,7 +2,7 @@
 
 
 
-accstr global_txt(10);           // this one uses dynamic memory. global scope
+accstr global_txt(100);          // this one uses dynamic memory. global scope
 
 
 
@@ -11,6 +11,14 @@ void foo() {
   accstr local_txt(txt,10);      // this one uses external array in stack (txt). Note that txt has one extra byte for the ending zero
   accstr local_dm_txt(10);       // this other uses dynamic memory
 
+  Serial.println(F("test of cpyfmt"));
+  global_txt.cpyfmt("%u, %u",1,2);
+  Serial.println(global_txt.text());
+  Serial.println(F("test of catfmt"));
+  global_txt.catfmt(", %s%u","Last value: ",3);
+  Serial.println(global_txt.text());
+  Serial.println();
+  
   Serial.print(F("global_txt+=\"12\" > "));
   if (global_txt+="12") {
     Serial.print(global_txt.text());

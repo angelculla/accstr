@@ -174,23 +174,25 @@ bool accstr::catint(int32_t val) {
 
 
 
-bool accstr::cpyintfmt(char *fmt, int32_t val) {
+bool accstr::cpyfmt(char *fmt, ...) {
   char src[101];
-  int i;
+  va_list ap;
 
-  i=snprintf(src,100,fmt,val);
-  if (i<0) return false;
+  va_start(ap,fmt);
+  vsnprintf(src,100,fmt,ap);
+  va_end(ap);
   return cpy(src);
 }
 
 
 
-bool accstr::catintfmt(char *fmt, int32_t val) {
+bool accstr::catfmt(char *fmt, ...) {
   char src[101];
-  int i;
+  va_list ap;
 
-  i=snprintf(src,100,fmt,val);
-  if (i<0) return false;
+  va_start(ap,fmt);
+  vsnprintf(src,100,fmt,ap);
+  va_end(ap);
   return cat(src);
 }
 
